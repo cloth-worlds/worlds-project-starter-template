@@ -1,0 +1,36 @@
+name: "CI"
+
+# Trigger workflow on pushes to main, pull requests, releases, and manual dispatch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [released]
+  workflow_dispatch:  # Allow manual workflow runs from GitHub UI
+
+jobs:
+  # Build and publish Docker image
+  image:
+    name: Image
+    permissions:
+      actions: read           # Read GitHub Actions artifacts
+      contents: write         # Push to repository
+      packages: write         # Push to GitHub Container Registry
+      security-events: write  # Upload security scan results
+      id-token: write         # OIDC token for Azure authentication
+    uses: worlds-io/github-actions/.github/workflows/image.yaml@main
+    secrets: inherit
+
+  # Package and publish Helm chart
+  helm:
+    name: Helm
+    permissions:
+      contents: write         # Commit and push Helm chart
+      packages: write         # Push to Helm registry
+      id-token: write         # OIDC token for authentication
+    uses: worlds-io/github-actions/.github/workflows/helm.yaml@main
+    secrets: inherit
