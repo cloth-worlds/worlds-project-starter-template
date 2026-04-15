@@ -5,7 +5,7 @@ description = "My Project Name service"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "fastapi>=0.115.0",
+    "fastapi>=0.135.3",
     "uvicorn[standard]>=0.32.0",
     "pydantic-settings>=2.9.1",
     "python-dotenv>=1.1.1",
