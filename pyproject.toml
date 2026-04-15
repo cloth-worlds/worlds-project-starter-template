@@ -10,7 +10,7 @@ dependencies = [
     "pydantic-settings>=2.9.1",
     "python-dotenv>=1.1.1",
     "gql[all]>=4.0.0",
-    "aiohttp>=3.11.11",
+    "aiohttp>=3.13.5",
     "websockets>=14.1",
     "graphql-core>=3.2.5",
 ]
