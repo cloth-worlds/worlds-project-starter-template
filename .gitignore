@@ -86,6 +86,9 @@ ipython_config.py
 # UV
 #uv.lock
 
+# macOS
+.DS_Store
+
 # PEP 582
 __pypackages__/
 
