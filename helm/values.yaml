@@ -6,17 +6,16 @@ image:
   repository: worlds-io/my-project-name
 config:
   APP_LOG_LEVEL: "INFO"
-  # TODO: Update env var names to match your prefix
-  MY_APP_HTTP_ENDPOINT: "http://tracks-service-http:8080/graphql"
-  MY_APP_TOKEN_ID: ""
-  MY_APP_WS_ENDPOINT: "ws://tracks-service-http:8080/graphql"
+  HTTP_ENDPOINT: "http://tracks-service-http:8080/graphql"
+  TOKEN_ID: ""
+  WS_ENDPOINT: "ws://tracks-service-http:8080/graphql"
 env:
   # TODO: Update secret names and keys for your project
-  - name: MY_APP_TOKEN_VALUE
+  - name: TOKEN_VALUE
     valueFrom:
       secretKeyRef:
         name: my-project-name
-        key: MY_APP_TOKEN_VALUE
+        key: TOKEN_VALUE
   - name: API_BEARER_TOKEN
     valueFrom:
       secretKeyRef:

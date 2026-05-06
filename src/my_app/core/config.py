@@ -18,17 +18,12 @@ class APIConfig(BaseSettings):
 
 
 class AppConfig(BaseSettings):
-    """Configuration for My Project Name service.
-
-    Env vars are prefixed with MY_APP_ (e.g. MY_APP_HTTP_ENDPOINT).
-    Rename this class and update env_prefix for your project.
-    """
+    """Configuration for My Project Name service."""
 
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
-        env_prefix="MY_APP_",
     )
 
     # GraphQL API Configuration

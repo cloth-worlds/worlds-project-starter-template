@@ -11,7 +11,6 @@ A starter template for Worlds Python microservices using FastAPI, GraphQL (gql),
 |---|---|---|
 | `my-project-name` | Your kebab-case project name | `seadrill-hard-hat` |
 | `my_app` | Your Python package name (snake_case) | `shh_app` |
-| `MY_APP_` | Your env var prefix (UPPER_SNAKE) | `SHH_` |
 | `My Project Name` | Human-readable project name | `Seadrill Hard Hat` |
 
 3. Update `helm/values.yaml` with your actual config/secret values
