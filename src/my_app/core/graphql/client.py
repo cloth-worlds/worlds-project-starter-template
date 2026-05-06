@@ -40,18 +40,20 @@ class GraphQLClient:
     async def start(self) -> None:
         """Initialize the GraphQL client and open a persistent session."""
         try:
-            self._transport = AIOHTTPTransport(
+            transport = AIOHTTPTransport(
                 url=self.http_endpoint,
                 headers=self._auth_headers,
                 timeout=self.timeout,
             )
-
-            self._client = Client(
-                transport=self._transport,
+            client = Client(
+                transport=transport,
                 fetch_schema_from_transport=False,
             )
+            session = await client.connect_async(reconnecting=False)
 
-            self._session = await self._client.connect_async(reconnecting=False)
+            self._transport = transport
+            self._client = client
+            self._session = session
             log.info("GraphQL client started successfully")
         except Exception as e:
             log.error(f"Failed to start GraphQL client: {e}")
@@ -76,14 +78,15 @@ class GraphQLClient:
         max_retries: int = 3,
     ) -> Dict[str, Any]:
         """Execute a GraphQL query."""
-        if not self._session:
+        session = self._session
+        if session is None:
             raise RuntimeError("Client not started. Call start() first.")
 
         for attempt in range(max_retries):
             try:
                 query = gql(query_str)
                 request = GraphQLRequest(query, variable_values=variables)
-                result = await self._session.execute(request)
+                result = await session.execute(request)
                 return result
             except TransportError as e:
                 log.warning(f"Query attempt {attempt + 1}/{max_retries} failed: {e}")
@@ -104,14 +107,15 @@ class GraphQLClient:
         max_retries: int = 3,
     ) -> Dict[str, Any]:
         """Execute a GraphQL mutation."""
-        if not self._session:
+        session = self._session
+        if session is None:
             raise RuntimeError("Client not started. Call start() first.")
 
         for attempt in range(max_retries):
             try:
                 mutation = gql(mutation_str)
                 request = GraphQLRequest(mutation, variable_values=variables)
-                result = await self._session.execute(request)
+                result = await session.execute(request)
                 return result
             except TransportError as e:
                 log.warning(f"Mutation attempt {attempt + 1}/{max_retries} failed: {e}")
